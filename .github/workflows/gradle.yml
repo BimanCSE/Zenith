@@ -33,6 +33,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      -  uses: actions/checkout@v2
       - name: Build and docker deploy image at QA
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
