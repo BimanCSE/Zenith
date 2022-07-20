@@ -22,13 +22,20 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'temurin'
+          distribution: 'adopt'
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
-        run: ./gradlew bootJar
-      - name: Cache the jar file
-        uses: actions/cache@v2
+        run: ./gradlew build
+      - name: Build docker image
+        uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
-          path: build/libs/app.jar
-          key: zenith-demo-${{ github.sha }}
+          email: 'biman20006@iiitd.ac.in'
+          heroku_api_key: 'cf397d7d-6ab7-4f46-b63e-baeeacc96054'
+          heroku_app_name: 'zenith-demo123'
+          dockerfile_directory: ./
+          dockerfile_name: Dockerfile
+          process_type: web
+
+
+
