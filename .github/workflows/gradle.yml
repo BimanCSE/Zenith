@@ -52,7 +52,7 @@ jobs:
         with:
           email: 'biman20006@iiitd.ac.in'
           heroku_api_key: 'cf397d7d-6ab7-4f46-b63e-baeeacc96054'
-          heroku_app_name: 'zenith-demo123'
+          heroku_app_name: 'zenith-demo-test-env'
           dockerfile_directory: ./
           dockerfile_name: Dockerfile
           process_type: web
