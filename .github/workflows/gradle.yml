@@ -25,6 +25,11 @@ jobs:
           distribution: 'adopt'
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+      - name: cache gradle build jar file
+        uses: actions/cache@v3
+        with:
+          path: .
+          key: app.jar
       - name: Build with Gradle
         run: ./gradlew build
 
@@ -35,7 +40,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      -  uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - name : get gradle jar file from previous job
+        uses: actions/cache@v3
+        with:
+          path: .
+          key: app.jar
       - name: Build and docker deploy image at QA
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
