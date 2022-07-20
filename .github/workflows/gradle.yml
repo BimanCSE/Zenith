@@ -12,7 +12,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  buildJarFile:
+  build:
 
     runs-on: ubuntu-latest
 
@@ -27,7 +27,13 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build
-      - name: Build docker image
+
+  deployToQA:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Build and docker deploy image at QA
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
           email: 'biman20006@iiitd.ac.in'
