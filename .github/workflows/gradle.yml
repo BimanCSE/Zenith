@@ -31,7 +31,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: build/libs/
-          key: app.jar
+          key: ${{ runner.os }}-app.jar
 
 
   deployToQA:
@@ -46,7 +46,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: build/libs/
-          key: app.jar
+          key: ${{ runner.os }}-app.jar
       - name: Build and docker deploy image at QA
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
