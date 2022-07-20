@@ -42,17 +42,41 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name : get gradle jar file from previous job
+      - name : get cached gradle jar file from build job
         uses: actions/cache@v3
         with:
           path: build/libs/
           key: ${{ runner.os }}-app.jar
-      - name: Build and docker deploy image at QA
+      - name: Build and deploy docker image at QA environment
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
           email: 'biman20006@iiitd.ac.in'
           heroku_api_key: 'cf397d7d-6ab7-4f46-b63e-baeeacc96054'
           heroku_app_name: 'zenith-demo-test-env'
+          dockerfile_directory: ./
+          dockerfile_name: Dockerfile
+          process_type: web
+
+
+  deployToProd:
+
+    name: Build deploy to Prod environment
+    needs: deployToQA
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: get cached gradle jar file from build job
+        uses: actions/cache@v3
+        with:
+          path: build/libs/
+          key: ${{ runner.os }}-app.jar
+      - name: Build and docker deploy image at Prod
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          email: 'biman20006@iiitd.ac.in'
+          heroku_api_key: 'cf397d7d-6ab7-4f46-b63e-baeeacc96054'
+          heroku_app_name: 'zenith-demo-prod-env'
           dockerfile_directory: ./
           dockerfile_name: Dockerfile
           process_type: web
