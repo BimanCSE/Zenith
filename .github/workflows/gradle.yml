@@ -1,3 +1,94 @@
+## This workflow uses actions that are not certified by GitHub.
+## They are provided by a third-party and are governed by
+## separate terms of service, privacy policy, and support
+## documentation.
+## This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+## For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
+#
+#name: Java CI with Gradle
+#
+#on:
+#  push:
+#    branches: [ "main" ]
+#
+#jobs:
+#  build:
+#    name: Build and test the project
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: Set up JDK 11
+#        uses: actions/setup-java@v2
+#        with:
+#          java-version: '11'
+#          distribution: 'adopt'
+#      - name: Grant execute permission for gradlew
+#        run: chmod +x gradlew
+#      - name: Build with Gradle
+#        run: ./gradlew build
+#      - name: cache gradle build jar file
+#        uses: actions/cache@v3
+#        with:
+#          path: build/libs/
+#          key: app.jar
+#
+#
+#  deployToQA:
+#
+#    name: Build deploy to QA environment
+#    needs: build
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name : get cached gradle jar file from build job
+#        uses: actions/cache@v3
+#        with:
+#          path: build/libs/
+#          key: app.jar
+#      - name: Build and deploy docker image at QA environment
+#        uses: gonuit/heroku-docker-deploy@v1.3.3
+#        with:
+#          email: 'biman20006@iiitd.ac.in'
+#          heroku_api_key: 'cf397d7d-6ab7-4f46-b63e-baeeacc96054'
+#          heroku_app_name: 'zenith-demo-test-env'
+#          dockerfile_directory: ./
+#          dockerfile_name: Dockerfile
+#          process_type: web
+#
+#
+#  deployToProd:
+#
+#    name: Build deploy to Prod environment
+#    needs: deployToQA
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: get cached gradle jar file from build job
+#        uses: actions/cache@v3
+#        with:
+#          path: build/libs/
+#          key: app.jar
+#      - name: Build and docker deploy image at Prod
+#        uses: gonuit/heroku-docker-deploy@v1.3.3
+#        with:
+#          email: 'biman20006@iiitd.ac.in'
+#          heroku_api_key: 'cf397d7d-6ab7-4f46-b63e-baeeacc96054'
+#          heroku_app_name: 'zenith-demo-prod-env'
+#          dockerfile_directory: ./
+#          dockerfile_name: Dockerfile
+#          process_type: web
+#
+#
+## dummy commit
+#
+
+
+
+
+
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
@@ -27,26 +118,6 @@ jobs:
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build
-      - name: cache gradle build jar file
-        uses: actions/cache@v3
-        with:
-          path: build/libs/
-          key: app.jar
-
-
-  deployToQA:
-
-    name: Build deploy to QA environment
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name : get cached gradle jar file from build job
-        uses: actions/cache@v3
-        with:
-          path: build/libs/
-          key: app.jar
       - name: Build and deploy docker image at QA environment
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
@@ -56,21 +127,6 @@ jobs:
           dockerfile_directory: ./
           dockerfile_name: Dockerfile
           process_type: web
-
-
-  deployToProd:
-
-    name: Build deploy to Prod environment
-    needs: deployToQA
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: get cached gradle jar file from build job
-        uses: actions/cache@v3
-        with:
-          path: build/libs/
-          key: app.jar
       - name: Build and docker deploy image at Prod
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
