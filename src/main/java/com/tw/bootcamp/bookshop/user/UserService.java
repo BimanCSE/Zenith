@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import javax.validation.Validator;
 import java.util.Optional;
 
+import static com.tw.bootcamp.bookshop.user.User.PASSWORD_ENCODER;
+
 @Service
 public class UserService implements UserDetailsService {
     @Autowired
@@ -26,9 +28,19 @@ public class UserService implements UserDetailsService {
         if (user.isPresent()) {
             throw new InvalidEmailException();
         }
+        //validator.validate(userCommand);
+
         User newUser = User.create(userCommand);
         validator.validate(newUser);
+
+//        String password = "";
+//        if (!userCommand.getPassword().isEmpty()) {
+//            password = PASSWORD_ENCODER.encode(userCommand.getPassword());
+//
+//        }
+//        User usr = new User(userCommand.getEmail(), password );
         return userRepository.save(newUser);
+        //return userRepository.save(usr);
     }
 
     @Override
