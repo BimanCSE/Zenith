@@ -11,8 +11,12 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Long>  {
     List<Book> findAllByOrderByPriceDesc();
 
+
+
     List<Book> findByName(@Param("name") String name);
 
-    @Query("SELECT b FROM Book b WHERE b.name LIKE %:name%")
+    @Query(value = "SELECT b.* FROM books b WHERE lower(b.name) LIKE %:name%", nativeQuery = true)
     List<Book> searchBookByNameLike(@Param("name") String name);
+
+
 }

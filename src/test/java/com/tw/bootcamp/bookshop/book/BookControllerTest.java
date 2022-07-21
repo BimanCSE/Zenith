@@ -10,6 +10,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -31,6 +32,8 @@ class BookControllerTest {
 
     @Test
     void shouldListAllBooksWhenPresent() throws Exception {
+
+
         List<Book> books = new ArrayList<>();
         Book book = new Book("title", "author name", 300);
         books.add(book);

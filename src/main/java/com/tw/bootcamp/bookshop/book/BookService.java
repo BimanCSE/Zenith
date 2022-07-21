@@ -20,9 +20,11 @@ public class BookService {
         return bookRepository.findAllByOrderByPriceDesc();
     }
 
+
+
     public <name> List<Book> fetchByName(String name) {
 
-        return bookRepository.searchBookByNameLike(name);
+        return bookRepository.searchBookByNameLike(name.toLowerCase());
     }
 
     public List<Book> findByName(String name){
