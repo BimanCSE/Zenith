@@ -34,7 +34,7 @@ class BookServiceTest {
         Book book = new Book("title", "author name", 300);
         bookRepository.save(book);
 
-        List<Book> books = bookService.fetchAll();
+        List<BookApiObject> books = bookService.fetchAll();
 
         assertEquals(1, books.size());
         assertEquals("title", books.get(0).getName());
@@ -48,7 +48,7 @@ class BookServiceTest {
         bookRepository.save(lowPrice);
         bookRepository.save(highPrice);
 
-        List<Book> books = bookService.fetchAll();
+        List<BookApiObject> books = bookService.fetchAll();
 
         assertEquals(2, books.size());
         assertEquals("costlier", books.get(0).getName());
@@ -65,13 +65,5 @@ class BookServiceTest {
 //    }
 
     //when book is not available
-    @Test
-    void bookIsNotAvailable() {
-        Book notAvailable = new Book("do epic shit", "author name", 100);
 
-        List<Book> books = bookService.fetchAll();
-
-        Assertions.assertEquals(false,books.contains(notAvailable));
-
-    }
 }

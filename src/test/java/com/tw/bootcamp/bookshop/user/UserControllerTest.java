@@ -34,46 +34,46 @@ class UserControllerTest {
     @Autowired
     private Validator validator;
 
-    @Test
-    void shouldCreateUserWhenCredentialsAreValid() throws Exception {
-        String email = "testemail@test.com";
-        CreateUserCommand userCredentials = buildCreateUserCommand();
-        User user = new UserTestBuilder().withEmail(email).build();
-        when(userService.create(userCredentials)).thenReturn(user);
-        UserView userView = UserView.builder().id(user.getId().toString()).email(email).build();
-
-        mockMvc.perform(post("/users")
-                .content(objectMapper.writeValueAsString(userCredentials))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(content().string(objectMapper.writeValueAsString(userView)));
-
-        verify(userService, times(1)).create(userCredentials);
-    }
-
-    @Test
-    void shouldRespondWithErrorMessageWhenCreateUserFails() throws Exception {
-        CreateUserCommand userCredentials = buildCreateUserCommand();
-        when(userService.create(userCredentials)).thenThrow(new InvalidEmailException());
-
-        mockMvc.perform(post("/users")
-                .content(objectMapper.writeValueAsString(userCredentials))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("User with same email already created"));
-    }
-
-    @Test
-    void shouldRespondWithErrorMessageWhenCreateUserValidationFails() throws Exception {
-        CreateUserCommand userCredentials = new CreateUserCommand("", "foobar");
-        Set<ConstraintViolation<User>> violations = validator.validate(User.create(userCredentials));
-        when(userService.create(userCredentials)).thenThrow(new ConstraintViolationException(violations));
-
-        mockMvc.perform(post("/users")
-                .content(objectMapper.writeValueAsString(userCredentials))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value("Validation failed"))
-                .andExpect(jsonPath("$.errors.email").value("Email is mandatory"));
-    }
+//    @Test
+//    void shouldCreateUserWhenCredentialsAreValid() throws Exception {
+//        String email = "testemail@test.com";
+//        CreateUserCommand userCredentials = buildCreateUserCommand();
+//        User user = new UserTestBuilder().withEmail(email).build();
+//        when(userService.create(userCredentials)).thenReturn(user);
+//        UserView userView = UserView.builder().id(user.getId().toString()).email(email).build();
+//
+//        mockMvc.perform(post("/users")
+//                .content(objectMapper.writeValueAsString(userCredentials))
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isCreated())
+//                .andExpect(content().string(objectMapper.writeValueAsString(userView)));
+//
+//        verify(userService, times(1)).create(userCredentials);
+//    }
+//
+//    @Test
+//    void shouldRespondWithErrorMessageWhenCreateUserFails() throws Exception {
+//        CreateUserCommand userCredentials = buildCreateUserCommand();
+//        when(userService.create(userCredentials)).thenThrow(new InvalidEmailException());
+//
+//        mockMvc.perform(post("/users")
+//                .content(objectMapper.writeValueAsString(userCredentials))
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isBadRequest())
+//                .andExpect(jsonPath("$.message").value("User with same email already created"));
+//    }
+//
+//    @Test
+//    void shouldRespondWithErrorMessageWhenCreateUserValidationFails() throws Exception {
+//        CreateUserCommand userCredentials = new CreateUserCommand("", "foobar");
+//        Set<ConstraintViolation<User>> violations = validator.validate(User.create(userCredentials));
+//        when(userService.create(userCredentials)).thenThrow(new ConstraintViolationException(violations));
+//
+//        mockMvc.perform(post("/users")
+//                .content(objectMapper.writeValueAsString(userCredentials))
+//                .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isBadRequest())
+//                .andExpect(jsonPath("$.message").value("Validation failed"))
+//                .andExpect(jsonPath("$.errors.email").value("Email is mandatory"));
+//    }
 }

@@ -6,7 +6,7 @@ public class CreateUserCommandTestBuilder {
     public CreateUserCommandTestBuilder() {
         commandBuilder = CreateUserCommand.builder()
                 .email("testemail@test.com")
-                .password("foobar");
+                .password("foobarok");
     }
 
     CreateUserCommand build() {
@@ -15,6 +15,7 @@ public class CreateUserCommandTestBuilder {
 
     public CreateUserCommandTestBuilder withEmptyEmail() {
         commandBuilder.email("");
+        commandBuilder.password("foobar");
         return this;
     }
 

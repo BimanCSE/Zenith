@@ -1,15 +1,11 @@
 package com.tw.bootcamp.bookshop.book;
 
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
-import java.util.List;
+
 
 @Entity
 @Table(name = "books")
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,13 +15,33 @@ public class Book {
 
     private Integer price;
 
+    private String description;
+    private boolean availability;
+    private Integer ratings;
     public Book() {
     }
 
-    public Book(String name, String authorName, Integer price) {
+    public Book(String name, String authorName, Integer price ) {
         this.name = name;
         this.authorName = authorName;
         this.price = price;
+        this.description = null;
+        this.availability = false;
+        this.ratings = null;
+    }
+    public Book(String name, String authorName, Integer price , String description ) {
+        this(name,authorName,price);
+        this.description = description;
+    }
+    public Book(String name, String authorName, Integer price , String description,boolean availability) {
+        this(name,authorName,price,description);
+        this.availability = availability;
+    }
+
+
+    public Book(String name, String authorName, Integer price , String description,boolean availability,Integer ratings) {
+        this(name,authorName,price,description,availability);
+        this.ratings = ratings;
     }
 
     public String getName() {
@@ -44,4 +60,7 @@ public class Book {
         return id;
     }
 
+    public String getDescription(){return description;}
+    public boolean getAvailability(){return availability;}
+    public Integer getRatings(){return ratings;}
 }

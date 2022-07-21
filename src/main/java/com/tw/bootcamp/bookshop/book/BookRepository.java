@@ -18,5 +18,6 @@ public interface BookRepository extends JpaRepository<Book, Long>  {
     @Query(value = "SELECT b.* FROM books b WHERE lower(b.name) LIKE %:name%", nativeQuery = true)
     List<Book> searchBookByNameLike(@Param("name") String name);
 
-
+    @Query("SELECT b from Book b WHERE b.id=:id")
+    List<Book>  searchBookById(@Param("id")Long id);
 }

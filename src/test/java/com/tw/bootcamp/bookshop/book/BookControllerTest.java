@@ -33,9 +33,8 @@ class BookControllerTest {
     @Test
     void shouldListAllBooksWhenPresent() throws Exception {
 
-
-        List<Book> books = new ArrayList<>();
-        Book book = new Book("title", "author name", 300);
+        List<BookApiObject> books = new ArrayList<>();
+        BookApiObject book = new BookApiObject("title", "author name", 300);
         books.add(book);
         when(bookService.fetchAll()).thenReturn(books);
 
@@ -47,6 +46,7 @@ class BookControllerTest {
     }
 
     @Test
+
     void shouldBeEmptyListWhenNoBooksPresent() throws Exception {
         when(bookService.fetchAll()).thenReturn(new ArrayList<>());
 

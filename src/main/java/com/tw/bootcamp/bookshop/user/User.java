@@ -41,7 +41,6 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
     public static User create(CreateUserCommand userCommand) {
         String password = "";
 

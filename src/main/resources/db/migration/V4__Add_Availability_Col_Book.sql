@@ -1,0 +1,2 @@
+ALTER TABLE books
+    ADD availability BOOLEAN DEFAULT NULL;

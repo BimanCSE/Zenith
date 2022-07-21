@@ -40,7 +40,7 @@ class UserTest {
         CreateUserCommand userCommand = new CreateUserCommandTestBuilder().build();
         User user = User.create(userCommand);
 
-        assertTrue(PASSWORD_ENCODER.matches("foobar", user.getPassword()));
+        assertTrue(PASSWORD_ENCODER.matches("foobarok", user.getPassword()));
     }
 
     private Validator constraintsValidator() {
